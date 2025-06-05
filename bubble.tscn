@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvc42tdg51hy5"]
+
+[ext_resource type="Script" uid="uid://blqadfvia0786" path="res://bubble.gd" id="1_n2mqj"]
+[ext_resource type="Theme" uid="uid://cogqr3ns3qw04" path="res://main_theme.tres" id="2_y2db8"]
+
+[node name="Bubble" type="Node2D"]
+script = ExtResource("1_n2mqj")
+
+[node name="Equation" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("2_y2db8")
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1

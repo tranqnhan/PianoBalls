@@ -1,0 +1,170 @@
+[gd_scene load_steps=13 format=3 uid="uid://c2kec3nsbeqh6"]
+
+[ext_resource type="Script" uid="uid://ccfuxnrnva1o5" path="res://bubble_ani.gd" id="1_7b2gm"]
+[ext_resource type="Script" uid="uid://c5wti8jckpq2q" path="res://piano.gd" id="2_7b2gm"]
+[ext_resource type="PackedScene" uid="uid://yji5jfrtc8d0" path="res://piano_key.tscn" id="3_wetts"]
+[ext_resource type="PackedScene" uid="uid://7troqn7bfnwu" path="res://key_visualizer.tscn" id="4_00014"]
+[ext_resource type="FontFile" uid="uid://cf6e32ab4mn2x" path="res://CutePixel.ttf" id="4_dm4p5"]
+[ext_resource type="PackedScene" uid="uid://isa7aibjvy03" path="res://popped_bubble_effect.tscn" id="5_g4tgr"]
+[ext_resource type="Script" uid="uid://cjbnhp6i326cq" path="res://settings_edit.gd" id="7_pk5nr"]
+[ext_resource type="Theme" uid="uid://cogqr3ns3qw04" path="res://main_theme.tres" id="8_2eiut"]
+[ext_resource type="Script" uid="uid://rbgnbcj0p20n" path="res://mathpanel.gd" id="8_oqxhg"]
+[ext_resource type="PackedScene" uid="uid://civ0d2paiswnb" path="res://numpad.tscn" id="8_poig3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_00014"]
+size = Vector2(1200, 20)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_poig3"]
+bg_color = Color(0, 0, 0, 0.462745)
+
+[node name="Environment" type="Node2D"]
+
+[node name="Piano" type="Control" parent="."]
+z_index = -1
+layout_mode = 3
+anchors_preset = 0
+offset_top = 500.0
+offset_bottom = 500.0
+script = ExtResource("2_7b2gm")
+key = ExtResource("3_wetts")
+key_visualizer = ExtResource("4_00014")
+
+[node name="Visualizer" type="Control" parent="Piano"]
+anchors_preset = 0
+
+[node name="Notes" type="ColorRect" parent="Piano"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -500.0
+offset_right = 1200.0
+offset_bottom = -472.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="M" type="MarginContainer" parent="Piano/Notes"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Notes" type="Label" parent="Piano/Notes/M"]
+modulate = Color(0.223529, 1, 0.0784314, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_dm4p5")
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 2
+clip_text = true
+
+[node name="Keyboard" type="HBoxContainer" parent="Piano"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="KeyVisualizerDespawn" type="Area2D" parent="Piano"]
+position = Vector2(600, -550)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Piano/KeyVisualizerDespawn"]
+shape = SubResource("RectangleShape2D_00014")
+
+[node name="Bubble" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource("1_7b2gm")
+shift_pos = Vector2(600, 350)
+MAX_POINTS = 50
+popped_effect = ExtResource("5_g4tgr")
+
+[node name="DequeuePointTimer" type="Timer" parent="Bubble"]
+wait_time = 5.0
+autostart = true
+
+[node name="Settings" type="VBoxContainer" parent="."]
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 277.0
+offset_bottom = 139.0
+theme_override_constants/separation = 20
+script = ExtResource("7_pk5nr")
+
+[node name="AddRandomPoints" type="Button" parent="Settings"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_dm4p5")
+theme_override_font_sizes/font_size = 40
+text = " 1 RANDOM POINTS "
+
+[node name="NumRandomPoints" type="HSlider" parent="Settings"]
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_dm4p5")
+theme_override_font_sizes/font_size = 25
+text = "Number of Points:"
+
+[node name="NumOfPoints" type="Label" parent="Settings/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_fonts/font = ExtResource("4_dm4p5")
+theme_override_font_sizes/font_size = 25
+
+[node name="Warning" type="Label" parent="Settings"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("4_dm4p5")
+theme_override_font_sizes/font_size = 25
+text = "MAX NUMBER OF POINTS REACHED!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MathPanel" type="Panel" parent="."]
+z_index = 2
+custom_minimum_size = Vector2(1200, 700)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_poig3")
+script = ExtResource("8_oqxhg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MathPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -52.0
+offset_right = 20.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Equation" type="Label" parent="MathPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("8_2eiut")
+
+[node name="Numpad" parent="MathPanel/VBoxContainer" instance=ExtResource("8_poig3")]
+layout_mode = 2
+
+[connection signal="area_entered" from="Piano/KeyVisualizerDespawn" to="Piano" method="_on_key_visualizer_despawn_area_entered"]
+[connection signal="num_points_changed" from="Bubble" to="Settings" method="_on_bubble_num_points_changed"]
+[connection signal="timeout" from="Bubble/DequeuePointTimer" to="Bubble" method="_on_dequeue_point_timeout"]
+[connection signal="pressed" from="Settings/AddRandomPoints" to="Settings" method="_on_add_random_points_pressed"]
+[connection signal="drag_ended" from="Settings/NumRandomPoints" to="Settings" method="_on_num_random_points_drag_ended"]
+[connection signal="value_changed" from="Settings/NumRandomPoints" to="Settings" method="_on_num_random_points_value_changed"]
+[connection signal="numpad_enter_pressed" from="MathPanel/VBoxContainer/Numpad" to="MathPanel" method="_on_numpad_numpad_enter_pressed"]

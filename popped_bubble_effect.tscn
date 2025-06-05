@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://isa7aibjvy03"]
+
+[sub_resource type="Gradient" id="Gradient_tdekc"]
+offsets = PackedFloat32Array(0, 0.546667, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+emitting = false
+amount = 10
+lifetime = 3.0
+one_shot = true
+explosiveness = 0.5
+randomness = 0.2
+lifetime_randomness = 0.2
+fixed_fps = 60
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+damping_min = 12.121
+damping_max = 12.121
+scale_amount_min = 5.0
+scale_amount_max = 10.0
+color_ramp = SubResource("Gradient_tdekc")
+hue_variation_min = -1.0
+hue_variation_max = 1.0
